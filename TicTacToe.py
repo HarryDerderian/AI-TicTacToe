@@ -24,52 +24,31 @@ class TicTacToe(Game):
        return GameState(to_move, util, board, moves)
 
     def utility(self, state, player):
-        if self.terminal_test(state) :
-            board = state.board
-            current = []
-            for row in range(0,3) :
-                for column in range(0, 3) :
-                    current.append(board[column +  3*row])
-                if all(i == current[0] for i in current)  and '-' not in current  :
-                    return 1 if current[0] == 'X' else -1
-                current.clear()
-            for column in range(0, 3) :
-                for row in range(0,3)  :
-                    current.append(board[column  + 3*row])   
-                if all(i == current[0] for i in current)  and '-' not in current  :
-                     return 1 if current[0] == 'X' else -1
-                current.clear()
-            current = [board[0], board[4], board[8]]
-            if all(i == current[0] for i in current)  and '-' not in current  : 
-                 return 1 if current[0] == 'X' else -1
-            current = [board[2], board[4], board[6]]
-            if all(i == current[0] for i in current)  and '-' not in current  : 
-                 return 1 if current[0] == 'X' else -1
-        return 0
-
-    def terminal_test(self, state):
-        """A state is terminal if there are no objects left"""
         board = state.board
         current = []
         for row in range(0,3) :
             for column in range(0, 3) :
                 current.append(board[column +  3*row])
             if all(i == current[0] for i in current)  and '-' not in current  :
-                return True
+                return 1 if current[0] == 'X' else -1
             current.clear()
         for column in range(0, 3) :
             for row in range(0,3)  :
-              current.append(board[column  + 3*row])   
+                current.append(board[column  + 3*row])   
             if all(i == current[0] for i in current)  and '-' not in current  :
-                return True
+                     return 1 if current[0] == 'X' else -1
             current.clear()
         current = [board[0], board[4], board[8]]
         if all(i == current[0] for i in current)  and '-' not in current  : 
-            return True
+                 return 1 if current[0] == 'X' else -1
         current = [board[2], board[4], board[6]]
         if all(i == current[0] for i in current)  and '-' not in current  : 
-            return True
-        return len(state.moves) == 0
+                 return 1 if current[0] == 'X' else -1
+        return 0         
+
+    def terminal_test(self, state):
+        """A state is terminal if there are no objects left"""
+        return len(state.moves) == 0  if state.utility == 0  else True
 
     def display(self, state):
         board = state.board
